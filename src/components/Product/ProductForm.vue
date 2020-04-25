@@ -2,11 +2,11 @@
   <form @submit.prevent="submit" :name="name" :id="name">
     <v-container>
       <v-row>
-        <v-col cols="12">
-          <v-text-field required autofocus v-model="item.name" label="نام محصول"></v-text-field>
+        <v-col cols="12" md="6">
+          <v-text-field required autofocus v-model="item.name" label="نام" persistent-hint hint="نام محصول"></v-text-field>
         </v-col>
         <v-col cols="12">
-          <v-text-field v-model="item.description" label="توضیحات"></v-text-field>
+          <v-text-field v-model="item.description" label="توضیحات" persistent-hint hint="توضیحات محصول"></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -26,6 +26,10 @@ export default Vue.extend({
       type: String,
       default: "product-form",
       required: false
+    },
+    submitHandler: {
+      type: Function,
+      required: false
     }
   },
   data() {
@@ -38,8 +42,11 @@ export default Vue.extend({
     };
   },
   methods: {
-    submit() {
-      this.$emit("submit", this.item);
+    async submit() {
+      if (this.submitHandler) {
+        await this.submitHandler(this.item);
+        this.resetForm();
+      }
     },
     resetForm() {
       this.item = {

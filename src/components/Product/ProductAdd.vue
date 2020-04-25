@@ -5,7 +5,7 @@
         <span class="headline">ثبت محصول</span>
       </v-card-title>
       <v-card-text>
-        <ProductForm name="addProductForm" @submit="handleSubmit" />
+        <ProductForm name="addProductForm" :submitHandler="handleSubmit" />
       </v-card-text>
       <v-card-actions>
         <v-btn text :loading="saving" type="submit" form="addProductForm" color="success">

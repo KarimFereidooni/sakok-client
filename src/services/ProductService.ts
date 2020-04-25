@@ -2,9 +2,9 @@ import axios from "@/plugins/axios";
 import { AppError } from "@/AppError";
 
 export default class ProductService {
-  public static async getProducts(page: number, itemsPerPage: number, sortBy: string, sortDesc: boolean) {
+  public static async getProducts(name: string = "", page: number, itemsPerPage: number, sortBy: string, sortDesc: boolean) {
     try {
-      const response = await axios.get(`/products?page=${page}&itemsPerPage=${itemsPerPage}&sortBy=${sortBy}&sortDesc=${sortDesc}`);
+      const response = await axios.get(`/products?name=${name}&page=${page}&itemsPerPage=${itemsPerPage}&sortBy=${sortBy}&sortDesc=${sortDesc}`);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data) {

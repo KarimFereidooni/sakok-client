@@ -5,7 +5,7 @@
         <span class="headline">ویرایش محصول</span>
       </v-card-title>
       <v-card-text>
-        <ProductForm name="editProductForm" :productData="productData" @submit="handleSubmit" />
+        <ProductForm name="editProductForm" :productData="productData" :submitHandler="handleSubmit" />
       </v-card-text>
       <v-card-actions>
         <v-btn text :loading="saving" type="submit" form="editProductForm" color="success">

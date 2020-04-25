@@ -3,10 +3,9 @@
     <v-app-bar app color="primary" dark>
       <v-btn text @click="addDialog = true">
         <v-icon>mdi-plus</v-icon>
-        <span class="ml-2">اضافه کردن</span>
+        <span class="ml-2">ثبت محصول جدید</span>
       </v-btn>
     </v-app-bar>
-
     <v-content>
       <v-container>
         <v-layout text-center wrap>
@@ -15,7 +14,20 @@
               <v-card-title>
                 محصولات
                 <v-spacer></v-spacer>
-                <v-text-field v-model="search" append-icon="mdi-magnify" label="جستجو" single-line hide-details></v-text-field>
+                <v-row>
+                  <v-col cols="12">
+                    <form @submit.prevent="loadData" style="width:100%">
+                      <v-text-field
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        label="جستجوی نام محصول"
+                        single-line
+                        hint="برای شروع جستجو کلید Enter را فشار دهید"
+                        autocomplete="off"
+                      ></v-text-field>
+                    </form>
+                  </v-col>
+                </v-row>
               </v-card-title>
               <v-data-table
                 :headers="headers"
@@ -84,7 +96,7 @@ export default Vue.extend({
       try {
         this.loading = true;
         const { sortBy, sortDesc, page, itemsPerPage } = this.options;
-        const result = await ProductService.getProducts(page, itemsPerPage, sortBy[0] || "", sortDesc[0] || false);
+        const result = await ProductService.getProducts(this.search, page, itemsPerPage, sortBy[0] || "", sortDesc[0] || false);
         this.products = result.items;
         this.totalProducts = result.totalCount;
       } catch (e) {
