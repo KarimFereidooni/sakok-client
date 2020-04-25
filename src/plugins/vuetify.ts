@@ -16,7 +16,8 @@ const fa = {
     ariaLabel: {
       sortDescending: ": Sorted descending. Activate to remove sorting.",
       sortAscending: ": Sorted ascending. Activate to sort descending.",
-      sortNone: ": Not sorted. Activate to sort ascending."
+      sortNone: ": Not sorted. Activate to sort ascending.",
+      activateAscending: "activateAscending"
     }
   },
   dataFooter: {
