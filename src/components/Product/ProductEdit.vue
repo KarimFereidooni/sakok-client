@@ -1,12 +1,19 @@
 <template>
-  <v-dialog v-model="modalVisible">
+  <v-dialog v-model="modalVisible" scrollable class="dialog">
     <v-card>
       <v-card-title>
+        <v-btn icon @click="cancel" class="ml-2">
+          <v-icon>
+            mdi-close
+          </v-icon>
+        </v-btn>
         <span class="headline">ویرایش محصول</span>
       </v-card-title>
-      <v-card-text>
-        <ProductForm name="editProductForm" :productData="productData" :submitHandler="handleSubmit" />
+      <v-divider></v-divider>
+      <v-card-text class="dialogContent">
+        <ProductForm :key="modalVisible ? productData._id : 0" name="editProductForm" :productData="productData" :submitHandler="handleSubmit" />
       </v-card-text>
+      <v-divider></v-divider>
       <v-card-actions>
         <v-btn text :loading="saving" type="submit" form="editProductForm" color="success">
           تایید
@@ -71,3 +78,12 @@ export default Vue.extend({
   }
 });
 </script>
+
+<style scoped>
+.dialog {
+  width: 90%;
+}
+.dialogContent {
+  height: 100vh;
+}
+</style>

@@ -36,6 +36,14 @@
                 :server-items-length="totalProducts"
                 :loading="loading"
                 class="elevation-1"
+                show-expand
+                :expanded.sync="expanded"
+                :single-expand="true"
+                item-key="_id"
+                loading-text="درحال بارگذاری..."
+                must-sort
+                sort-by="name"
+                :sort-desc="false"
               >
                 <template v-slot:item.actions="{ item }">
                   <v-btn icon color="primary">
@@ -48,6 +56,9 @@
                       mdi-delete
                     </v-icon>
                   </v-btn>
+                </template>
+                <template v-slot:expanded-item="{ headers, item }">
+                  <p v-for="property in item.properties" :key="property.name">{{ property.name }} : {{ property.value }}</p>
                 </template>
               </v-data-table>
             </v-card>
@@ -63,7 +74,6 @@
 <script lang="ts">
 import Vue from "vue";
 import ProductService from "@/services/ProductService";
-import { download } from "@/download";
 import ProductAdd from "@/components/Product/ProductAdd.vue";
 import ProductEdit from "@/components/Product/ProductEdit.vue";
 
@@ -89,7 +99,8 @@ export default Vue.extend({
       { text: "توضیحات", value: "description" },
       { text: "عملیات", value: "actions", sortable: false, width: 200 }
     ],
-    search: ""
+    search: "",
+    expanded: [] as any[]
   }),
   methods: {
     async loadData() {
@@ -123,7 +134,7 @@ export default Vue.extend({
       }
     },
     editItem(item) {
-      this.editData = item;
+      this.editData = JSON.parse(JSON.stringify(item));
       this.editDialog = true;
     }
   },
